@@ -21,7 +21,7 @@ test_that("BAR simulated logistic regression - no intercept", {
 
     cyclopsData <- createCyclopsData(y ~ x - 1,modelType = "lr")
 
-    bar <- fitCyclopsModel(cyclopsData, prior = createBarPrior("bic", fitBestSubset = TRUE),
+    bar <- fitCyclopsModel(cyclopsData, prior = createBarPrior("bic", fitBestSubset = TRUE, useCrossValidation = FALSE),
                                control = createControl(noiseLevel = "silent"))
 
     expect_equivalent(which(coef(bar) != 0.0), which(beta != 0.0))

@@ -1,6 +1,6 @@
 coxbar <- function(t, delta, X, sparseX = FALSE, COO = NULL, cyclopsForm = NULL, exclude = NULL,
                    lambda = 1, xi = 2, d = 0, max.iter = 1E4, tol = 1E-6, eps = 1E-6, scale = F,
-                   old = FALSE){
+                   old = FALSE, useCrossValidation = FALSE){
 
   if(scale == T) {
     beta.sd <- apply(X, 2, sd, na.rm = TRUE)
@@ -50,7 +50,8 @@ coxbar <- function(t, delta, X, sparseX = FALSE, COO = NULL, cyclopsForm = NULL,
                                                            tolerance = tol,
                                                            maxIterations = max.iter,
                                                            threshold = eps,
-                                                           delta = d))
+                                                           delta = d,
+                                                           useCrossValidation = useCrossValidation))
     if (scale == F) {
       beta.hat <- coef(fit)
     } else {

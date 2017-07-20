@@ -52,14 +52,15 @@ createBarPrior <- function(penalty = "bic",
                            tolerance = 1E-8,
                            maxIterations = 1E4,
                            threshold = 1E-6,
-                           delta = 0) {
+                           delta = 0,
+                           useCrossValidation = FALSE) {
 
     # TODO Check that penalty (and other arguments) is valid
 
     fitHook <- function(...) {
       # closure to capture BAR parameters
       barHook(fitBestSubset, initialRidgeVariance, tolerance,
-              maxIterations, threshold, delta, ...)
+              maxIterations, threshold, delta, useCrossValidation, ...)
     }
 
     structure(list(penalty = penalty,
@@ -77,6 +78,7 @@ barHook <- function(fitBestSubset,
                     maxIterations,
                     cutoff,
                     delta,
+                    useCrossValidation,
                     cyclopsData,
                     barPrior,
                     control,
@@ -116,7 +118,7 @@ barHook <- function(fitBestSubset,
       variance[priorType$exclude] <- 0
     }
 
-    prior <- Cyclops::createPrior(priorType$types, variance = variance)
+    prior <- Cyclops::createPrior(priorType$types, variance = variance, useCrossValidation = useCrossValidation)
     fit <- Cyclops::fitCyclopsModel(cyclopsData,
                                     prior = prior,
                                     control, weights, forceNewObject,

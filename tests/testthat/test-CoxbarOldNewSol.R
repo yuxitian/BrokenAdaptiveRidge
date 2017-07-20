@@ -21,7 +21,7 @@ start, length, event, x1, x2
 ")
 
   fit.old <- coxbar(test$length, test$event, cbind(test$x1, test$x2), lambda = 0.1, xi = 0.1, old = TRUE)
-  fit.new <- coxbar(test$length, test$event, cbind(test$x1, test$x2), lambda = 0.1, xi = 0.1, old = FALSE)
+  fit.new <- coxbar(test$length, test$event, cbind(test$x1, test$x2), lambda = 0.1, xi = 0.1, old = FALSE, useCrossValidation = FALSE)
 
   expect_equal(fit.old$beta,  fit.new$beta)
 })
